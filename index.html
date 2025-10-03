@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Frontend Mentor | Weather app</title>
+</head>
+
+
+<body>
+  <nav id="nav">
+    <div class="logo-container">
+      <img src="assets/images/logo.svg" alt="logo-image">
+    </div>
+    <div class="units-selector-container">
+      <button class="btn" id="units-btn">        
+        <span><img src="assets/images/icon-units.svg" alt="units-icon"></span>
+        <span>Units</span>
+        <span><img src="assets/images/icon-dropdown.svg" alt="dropdown-icon"></span>
+      </button>
+    </div>
+  </nav>
+  <main id="main_container">
+    <div class="weather-parent-container" id="weather_parent_container">
+      <div class="header">
+        <h1 class="title">How's the sky looking today?</h1>
+        <div class="location-search-container">
+            <div class="text-input-container" id="text_input_container">
+                <input type="text" class="text-input-icon_search" placeholder="Search for a place..." id="search-location-input">           
+            </div>
+            <button class="btn btn-bg-blue" id="search-location-btn">Search</button>
+        </div>
+      </div>
+      <div class="body">
+        <div class="current_forecast forecast-card loading" id="current_forecast">
+          <div class="loading-container">
+            <div class="loading-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <h5 >Loading...</h5>
+          </div>
+            <div class="card-body">
+                <div class="place-date-section">
+                    <h3 id="current_location">Berlin Germany</h4>
+                    <span id="current_date">Tuesday, aug 5, 2015</span>
+                </div>
+                <div class="forecast-section_current-forecast">
+                    <img src="assets/images/icon-storm.webp" alt="" class="forecast-icon" id="current_forecast_icon">
+                    <h1 class="title" id="current_temperature">20º</h1>
+                </div>
+            </div>
+        </div>
+        <div class="hourly_forecast forecast-card loading" id="hourly_forecast">
+          <div class="header">
+            <span>Hourly Forecast</span>
+            <button class="btn" id="week_days_btn">        
+              <span id="selected_day">-</span>
+              <span><img src="assets/images/icon-dropdown.svg" alt="dropdown-icon"></span>
+            </button>
+
+            <div class="days-container floating-container hidden light-border" id="days_container">
+              <div class="days-options-container" id="days_options_container">
+               
+              </div>
+          </div>
+          </div>
+          <div class="body">
+            <div class="item">
+                <div class="hour_icon">
+                  <img class="forecast-icon" src="assets/images/icon-sunny.webp" alt="forecast-icon">
+                  <span>5 PM</span>
+              </div>
+              <span>20º</span>
+            </div>
+            <div class="item loading-container">
+            </div>
+            <div class="item loading-container">
+            </div>
+            <div class="item loading-container">
+            </div>
+            <div class="item loading-container">
+            </div>
+              <div class="item loading-container">
+            </div>
+            <div class="item loading-container">
+            </div>
+          </div>
+        </div>
+        <div class="current_forecast_details loading" id="current_forecast_details">
+          <div class="body">
+            <div class="item forecast-card">
+              <span>Feels like</span>
+              <div class="item-content">
+                <div class="loading-bar-container loading-container">
+                  <span class="loading-bar"></span>
+                </div>
+                <span id="forecast_details_temperature">18ºC</span>
+              </div>
+            </div>
+            <div class="item forecast-card">
+              <span>Humidity</span>
+              <div class="item-content">
+                <div class="loading-bar-container loading-container">
+                  <span class="loading-bar"></span>
+                </div>                
+                <span id="forecast_details_humidity">46%</span>
+              </div>
+            </div>
+            <div class="item forecast-card">
+              <span>Wind</span>
+              <div class="item-content">
+                <div class="loading-bar-container loading-container">
+                  <span class="loading-bar"></span>
+                </div>
+                <span id="forecast_details_wind_speed">14 km/h</span>
+              </div>
+            </div>
+            <div class="item forecast-card">
+              <span>Precipitation</span>
+              <div class="item-content">
+                <div class="loading-bar-container loading-container">
+                  <span class="loading-bar"></span>
+                </div>     
+                <span id="forecast_details_precipitation">0 mm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="daily_forecast loading" id="daily_forecast">
+          <span class="title">Daily forecast</span>
+          <div class="body">
+            <div class="item forecast-card" data-index="0">
+
+            </div>
+            <div class="item forecast-card" data-index="1">
+
+            </div>
+            <div class="item forecast-card" data-index="2">
+
+            </div>
+            <div class="item forecast-card" data-index="3">
+
+            </div>
+            <div class="item forecast-card" data-index="4">
+
+            </div>
+            <div class="item forecast-card" data-index="5">
+
+            </div>
+            <div class="item forecast-card" data-index="6">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+
+
+  <!-- Units
+
+  Switch to Imperial/Metric
+
+  Temperature
+
+  Celsius (°C)
+  Fahrenheit (°F)
+
+  Wind Speed
+
+  km/h
+  mph
+
+  Precipitation
+
+  Millimeters (mm)
+  Inches (in)
+
+  How's the sky looking today?
+
+  Search for a city, e.g., New York
+  Search
+
+  Feels like  
+
+  Humidity  
+
+  Wind  
+  
+  Precipitation  
+
+  Daily forecast  
+
+  Hourly forecast   -->
+
+
+</body>
+</html>
+
+<script src="dist/main.js"></script>

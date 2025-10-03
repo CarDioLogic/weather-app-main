@@ -1,0 +1,642 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+
+:root {
+  --neutral-900: hsl(243, 96%, 9%);
+  --neutral-800: hsl(243, 27%, 20%);
+  --neutral-700: hsl(243, 23%, 24%);
+  --neutral-600: hsl(243, 23%, 30%);
+  --neutral-300: hsl(240, 6%, 70%);
+  --neutral-200: hsl(250, 6%, 84%);
+  --neutral-0: hsl(0, 0%, 100%);
+
+  --orange-500: hsl(28, 100%, 52%);
+
+  --blue-500: hsl(233, 67%, 56%);
+  --blue-700: hsl(248, 70%, 36%);
+  --bg-blue: hsl(241, 95%, 9%);
+  --btn-border-radius: 0.6rem;
+  --btn-padding-inline: 0.8rem;
+  --btn-padding-block: 0.6rem;
+
+  --grid-forecast-card-gap: 1.5rem;
+}
+
+@layer reset{
+    *,
+    *::before,
+    *::after{
+        box-sizing: border-box;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+        margin: 0;
+    }
+
+    img{
+        max-width: 100%;
+    }
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400; 
+  background-color: var(--bg-blue);
+  color: var(--neutral-0);
+  padding: 2rem;
+  max-width: 1600px;
+  margin-inline:auto;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+
+    @media (max-width: 450px) {
+          padding: 1rem;
+    }
+}
+main{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+}
+
+@layer base{
+    nav{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+    .logo-container, .logo-container > img{
+        width: clamp(150px, 14vw, 300px);
+    }
+
+    .btn{
+        font-family: 'DM Sans', sans-serif;
+        background-color: var(--neutral-800);
+        color: var(--neutral-0);
+        padding-inline: var(--btn-padding-inline);
+        padding-block: var(--btn-padding-block);
+        border-radius: var(--btn-border-radius);
+        border: none;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        cursor: pointer;
+    }
+    .btn#week_days_btn{
+        background: var(--neutral-600);
+    }
+    .btn:hover{
+        background: var(--neutral-700);
+    }
+    .btn:focus{
+        outline: 1px solid var(--neutral-300);
+        outline-offset: 2px;
+    }
+    .btn.btn-bg-blue{
+        background-color: var(--blue-500);
+    }
+    .btn.btn-bg-blue:hover{
+        background-color: var(--blue-700);
+    }
+    .btn-bg-blue:focus{
+        outline: 1px solid var(--blue-700) !important;
+        outline-offset: 2px;
+    }
+    .error-container{
+        width: 60%;
+        text-align: center;
+        margin-inline: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap:1rem;
+        margin-top: 3rem;
+    }
+    .error-container .error-icon{
+        width: 30px;
+        height: 30px;
+    }
+    .floating-container{
+        background-color: var(--neutral-700);
+        padding: var(--btn-padding-inline);
+        border-radius: var(--btn-border-radius);
+        display: grid;
+        gap:0.5rem;
+        z-index: 500;
+    }
+    .units-container,
+    .days-container{
+        position: absolute;
+        right: 0;
+        top:60px;
+        min-width: 180px;
+    }
+    .days-container{
+        right: 10px;
+    }
+    .units-options-container div, .switch-to-imperial-container,
+    .days-options-container div {
+        padding-block: 0.5rem;
+        padding-inline: 0.4rem;
+        border-radius: var(--btn-border-radius);
+    }
+    .units-options-container .title{
+        color: var(--neutral-300);
+        font-size: 0.9rem;
+    }
+    .units-options-container .option,
+    .days-options-container .option{
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .units-options-container .option.selected,
+    .days-options-container .option.selected,
+    #switch_to_imperial_container:hover{
+        background: var(--neutral-600);
+    }
+    .units-options-container .option .checkmark-icon,
+    .days-options-container .option .checkmark-icon{
+        display: none;
+    }
+    .units-options-container .option.selected .checkmark-icon,
+    .days-options-container .option.selected .checkmark-icon{
+        display: block;
+    }
+    .units-options-container,
+    .days-options-container{
+        display: grid;
+        gap: 0.5rem;
+        border-bottom: 1px solid var(--neutral-300);
+    }
+    .days-options-container{
+        border: none;
+    }
+    .weather-parent-container{
+        text-align: center;
+        display: grid;
+        gap:2rem;
+        grid-template-rows: auto 1fr; 
+        flex: 1;
+
+        @media(max-width:450px){
+            overflow: visible !important;
+        }
+    }
+    .weather-parent-container > .header .title{
+        margin-block: 3rem;
+        font-size: clamp(2.9rem, 2.5vw, 3.5rem);
+        font-family: "Bricolage Grotesque", sans-serif;
+    }
+    .text-input-icon_search {
+        width: 100%;
+        padding-left: 25px;
+        background: url("assets/images/icon-search.svg") no-repeat 1rem;
+        background-size: 18px;
+        color: var(--neutral-0);
+        
+        padding-block: 0.8rem;
+        padding-inline: 2.5rem;
+        border-radius: var(--btn-border-radius);
+        background-color: var(--neutral-800);
+        border: none;
+    }
+    .text-input-icon_search::placeholder{
+        color: var(--neutral-0)
+    }
+    .location-search-container{
+        display: flex;
+        justify-content: center;
+        gap:0.5rem;
+
+        @media(max-width: 450px){
+            flex-direction: column;
+        }
+    }
+
+    .location-search-container .text-input-container{
+        position: relative;
+        width: 35%;
+    }
+
+    #search-location-btn{
+        @media(max-width:450px){
+            justify-content: center;
+        }
+    }
+    .location-search-container .text-input-container,
+    .location-search-container .text-input-container #search-location-input,
+    .location-search-container #search-location-btn{
+        height: 50px;
+
+        @media(max-width: 450px){
+            width: 100%;
+        }
+    }
+
+    .locations-container{
+        max-height: 40vh;
+        overflow-y: scroll;
+        padding: 0.2rem;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        border-radius: var(--btn-border-radius);
+        background-color: var(--neutral-800);
+        text-align: left;
+        width: 100%;
+    }
+    .locations-container .location{
+        padding: 1rem;
+        cursor: pointer;
+    }
+    .locations-container .location:hover{
+        background-color: var(--neutral-600);
+        border-radius: var(--btn-border-radius);
+    }
+    .weather-parent-container  > .body{
+        display: grid; 
+        grid-template-columns: 1fr 1fr 1fr; 
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr; 
+        gap: 0px 0px; 
+        grid-template-areas: 
+            "current_forecast current_forecast hourly_forecast"
+            "current_forecast current_forecast hourly_forecast"
+            "current_forecast_details current_forecast_details hourly_forecast"
+            "daily_forecast daily_forecast hourly_forecast"
+            "daily_forecast daily_forecast hourly_forecast"; 
+        gap: var(--grid-forecast-card-gap);
+
+        @media(max-width:450px){
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    .weather-parent-container > .body .forecast-card{
+        border-radius: var(--btn-border-radius);
+        padding: 1rem;
+    }
+
+    .weather-parent-container, 
+    .weather-parent-container > .body, 
+    .weather-parent-container > .body .hourly_forecast{
+        overflow: auto;
+
+    }
+
+    .current_forecast { 
+        grid-area: current_forecast; 
+        background: url('assets/images/bg-today-large.svg') no-repeat center center;
+        background-size: cover;
+        display: flex;      
+        
+        @media(max-width: 450px){
+            order:1;
+        }   
+    }
+    .current_forecast .card-body{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;   
+        flex: 1;    
+
+        @media(max-width: 450px){
+            padding-block:1.5rem;
+            gap:1.5rem;
+            flex-direction: column;
+        }    
+    }
+    .current_forecast .card-body .place-date-section{
+        display: grid;
+        gap: 0.5rem;
+        text-align: start;
+
+        @media (max-width:450px){
+            width: 100%;
+            text-align: center;
+        }
+    }
+    .forecast-section_current-forecast{
+        display: flex;
+        align-items: center;
+        gap:0.5rem;
+
+        @media (max-width:450px){
+            width: 100%;
+           justify-content: space-around;
+        }
+    }
+    .forecast-section_current-forecast .forecast-icon {
+        width: clamp(100px, 6vw, 200px);
+    }
+    .forecast-section_current-forecast .title{
+        font-size: clamp(3.5rem, 3vw, 4.5rem);
+        font-style: italic;
+    }
+    
+    .hourly_forecast { 
+        grid-area: hourly_forecast; 
+        position: relative;
+
+        @media(max-width:450px){
+            order:4;
+            max-height: 60vh;
+        }
+    }
+    .hourly_forecast .header { 
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .current_forecast_details { 
+        grid-area: current_forecast_details; 
+        @media(max-width:450px){
+            order:2;
+        }
+    }
+    .current_forecast_details > .body {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.1rem;
+        height: 100%;
+
+        @media(max-width:450px){
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.6rem;
+        }
+    }
+    .current_forecast_details .item-content > span{
+        font-size: 1.5rem;
+    }
+
+    .current_forecast.loading,
+    .hourly_forecast,
+    .current_forecast_details .body .item,
+    .daily_forecast .body .item{
+        background: var(--neutral-800);
+    }
+    .current_forecast.loading{ 
+        grid-area: current_forecast;         
+        display: flex;
+        gap: 0.5rem;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .current_forecast.loading div:not(.loading-container),
+    .current_forecast_details.loading .item.forecast-card .item-content *:not(.loading-container),
+    .daily_forecast.loading .item.forecast-card *:not(.loading-container),
+    .hourly_forecast.loading .body *:not(.loading-container){
+        display:none;
+    }
+
+    .loading-container{
+        display: none;
+    }
+    .loading .loading-container{
+        display: grid;
+        gap: 0.5rem;
+    }
+    
+    .hourly_forecast .body{
+        display: flex;
+        flex-direction: column;
+        gap:0.6rem;
+        margin-top: 0.5rem;
+    }
+
+    .hourly_forecast .body .item{
+        height: 50px;
+        background-color: var(--neutral-700);
+        border: 1px solid var(--neutral-600);
+        border-radius: var(--btn-border-radius);
+        padding-inline: 1rem;
+    }
+
+    .hourly_forecast:not(.loading) .body .item:not(.loading-container){
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .hourly_forecast .body .item .hour_icon{
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+    .hourly_forecast .forecast-icon{
+        width: clamp(50px, 3vw, 80px);
+    }
+
+    .daily_forecast { 
+        grid-area: daily_forecast; 
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1rem;
+
+        @media(max-width:450px){
+            order:3;
+        }
+    }
+    .daily_forecast .title{
+        text-align: start;
+    }
+    .daily_forecast .body{
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap:0.6rem;
+        height: 100%;
+
+        @media(max-width:450px){
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    .daily_forecast .forecast-icon {
+        width: clamp(70px, 4vw, 100px);
+        margin: auto;
+    }
+    .daily_forecast .forecast-card, .temperature-range-container{
+        display: flex;
+        justify-content: space-between;
+    }
+    .daily_forecast .forecast-card{
+        flex-direction: column;
+        gap:1rem;
+    }
+
+    .btn,
+    .location-search-container .text-input-container #search-location-input{
+        font-size: clamp(1rem, 0.8vw, 1.2rem);
+    }
+
+
+    .daily_forecast > .title,
+    .current_forecast_details .body .item.forecast-card > span,
+    .hourly_forecast .header > span,
+    .current_forecast #current_date,
+    .hour_icon > h5, .hour_icon > span {
+        font-size: clamp(1rem, 1.2vw, 1.4rem);
+    }
+
+    .daily_forecast .forecast-card > .title,
+    .daily_forecast .temperature-range-container span {
+          font-size: clamp(0.8rem, 1vw, 1rem);
+          text-align: center;
+    }
+    #switch_to_imperial_container {
+        cursor:pointer;
+    }
+}
+
+@layer utilities {
+    .hidden{
+        display: none;
+    }
+
+    .flex{
+        display: flex;
+        gap:0.5rem;
+        align-items: center;
+    }
+
+    .light-border{
+        border:1px solid var(--neutral-600)
+    }
+
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: var(--neutral-600);
+        border-radius: 10px;
+    }
+}
+
+@layer animations{
+    .loading .loading-dots,
+    .loading.loading-dots{
+        display: flex;
+    }
+    .loading-dots {
+        justify-content: center;
+        align-items: flex-end;
+        gap: 0.5rem; 
+        height: 2rem;   
+        display: none; 
+    }
+
+        .loading-dots span {
+            width: 0.6rem;
+            height: 0.6rem;
+            background: var(--neutral-0); 
+            border-radius: 50%;
+            animation: bounce 0.6s infinite alternate;
+        }
+
+        .loading-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+        from {
+            transform: translateY(0);
+        }
+        to {
+            transform: translateY(-8px); 
+        }
+    }
+
+    .current_forecast_details .item{
+        text-align: start;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap:1.5rem;
+    }
+    .current_forecast #current_location{
+        font-size: clamp(2rem, 2vw, 2.2rem);
+    }
+
+    .loading-shimmer,
+    .current_forecast.loading,
+    .hourly_forecast.loading .body .item,
+    .current_forecast_details.loading .body .item,
+    .daily_forecast .body .item {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .loading-shimmer::after,
+    .current_forecast.loading::after,
+    .hourly_forecast.loading .body .item::after,
+    .current_forecast_details.loading .body .item::after,
+    .daily_forecast.loading .body .item::after{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -150%; /* start outside */
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent
+        );
+        animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+        100% {
+            left: 150%; 
+        }
+    }
+
+    .loading-bar-container {
+        width: 100%;
+        height: 2px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .loading-bar-container .loading-bar {
+        display: block;
+        width: 0%;
+        height: 100%;
+        background: white;
+        transform-origin: left center;
+        animation: growShrink 0.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes growShrink {
+        0%   { width: 6%;  opacity: 1; }
+        100% { width: 50%; opacity: 1; }
+    }
+
+    .spinning{
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        100% { transform: rotate(360deg); }
+    }
+}
